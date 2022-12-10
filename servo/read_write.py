@@ -47,7 +47,7 @@ SCS_MAXIMUM_POSITION_VALUE  = 4000        # and this value (note that the SCServ
 SCS_MOVING_STATUS_THRESHOLD = 20          # SCServo moving status threshold
 SCS_MOVING_SPEED            = 0           # SCServo moving speed
 SCS_MOVING_ACC              = 0           # SCServo moving acc
-protocol_end                = 1           # SCServo bit end(STS/SMS=0, SCS=1)
+protocol_end                = 0           # SCServo bit end(STS/SMS=0, SCS=1)
 
 index = 0
 scs_goal_position = [SCS_MINIMUM_POSITION_VALUE, SCS_MAXIMUM_POSITION_VALUE]         # Goal position

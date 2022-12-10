@@ -40,7 +40,7 @@ class protocol_packet_handler(object):
         elif result == COMM_RX_WAITING:
             return "[TxRxResult] Now receiving status packet!"
         elif result == COMM_RX_TIMEOUT:
-            return "[TxRxResult] There is no status packet!"
+            return "[TxRxResult] There is no status packet (COMM_RX_TIMEOUT, check if Serial Forwarding is started)!"
         elif result == COMM_RX_CORRUPT:
             return "[TxRxResult] Incorrect status packet!"
         elif result == COMM_NOT_AVAILABLE:
