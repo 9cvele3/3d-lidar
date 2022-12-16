@@ -1,20 +1,5 @@
 #!/usr/bin/env python
-import sys
-import tty
-import termios
 from scservo_sdk import PortHandler, PacketHandler, SCS_TOHOST, COMM_SUCCESS, SCS_LOWORD, SCS_HIWORD
-
-fd = sys.stdin.fileno()
-old_settings = termios.tcgetattr(fd)
-
-def getch():
-    try:
-        tty.setraw(sys.stdin.fileno())
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
-
 
 # Control table address
 ADDR_SCS_TORQUE_ENABLE = 40
@@ -23,6 +8,8 @@ ADDR_SCS_GOAL_POSITION = 42
 ADDR_SCS_GOAL_SPEED = 46
 ADDR_SCS_PRESENT_POSITION = 56
 
+# all methods must have `self` param, like in rust
+# there is builtin `id` in python
 class ServoController:
     def __init__(self, servo_id, device_name):
         self.id = servo_id
@@ -43,6 +30,10 @@ class ServoController:
         else:
             print("Failed to change the baudrate")
 
+    def __del__(self):
+        print("ServoController destructor")
+        self.port_handler.closePort()
+
     def get_id(self):
         return self.id
 
@@ -52,7 +43,7 @@ class ServoController:
         self.log_errors(scs_comm_result, scs_error)
 
     def set_speed(self):
-        SCS_MOVING_SPEED = 0
+        SCS_MOVING_SPEED = 100
         scs_comm_result, scs_error = self.packet_handler.write2ByteTxRx(self.port_handler, self.id, ADDR_SCS_GOAL_SPEED, SCS_MOVING_SPEED)
         self.log_errors(scs_comm_result, scs_error)
 
@@ -88,10 +79,6 @@ servo.set_acc()
 servo.set_speed()
 
 while 1:
-    print("Press any key to continue! (or press ESC to quit!)")
-    if getch() == chr(0x1b):
-        break
-
     servo.set_goal_position(scs_goal_position[scs_goal_position_index])
 
     # loop while servo gets to the goal position
