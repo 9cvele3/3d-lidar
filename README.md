@@ -1,8 +1,13 @@
 # Lidar
 
+* https://www.slamtec.com/en/Lidar/A1
+* Sample rate (8000)
+* Scan rate - motor pwm (2Hz - 10Hz)
+
 # Servo
 
 * https://www.waveshare.com/wiki/ST3215_Servo
+* https://www.waveshare.com/wiki/SC15_Servo (torque 17kgcm, 180 degrees, 1024 units)
 
 * ESP32 servo driver board is necessary to control the servo.
 
